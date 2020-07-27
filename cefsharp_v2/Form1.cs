@@ -53,11 +53,17 @@ namespace cefsharp_v2
       _browser.ConsoleMessage += BrowserConsoleMessage;
       _browser.LoadError += BrowserLoadError;
       _browser.StatusMessage += BrowserStatusMessage;
-      _browser.NavStateChanged += BrowserNavStateChanged;
+      _browser.LoadingStateChanged += BrowserNavStateChanged;
       _browser.TitleChanged += BrowserTitleChanged;
 
-      _browser.RegisterJsObject("formEntryHandler", _formEntryHandler);
-    }
+            //Obsolete
+      //_browser.RegisterJsObject("formEntryHandler", _formEntryHandler);
+
+            //Replaced with
+            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            CefSharpSettings.WcfEnabled = true;
+            _browser.JavascriptObjectRepository.Register("formEntryHandler", _formEntryHandler, isAsync: false, options: BindingOptions.DefaultBinder);
+        }
 
     void _formEntryHandler_FormPost(object sender, FormEntryEventArgs e)
     {
@@ -82,7 +88,7 @@ namespace cefsharp_v2
       LogMessage("TITLE CHANGED: " + e.Title);
     }
 
-    void BrowserNavStateChanged(object sender, NavStateChangedEventArgs e)
+    void BrowserNavStateChanged(object sender, LoadingStateChangedEventArgs e)
     {
       string navStatus = String.Format("Back ({0}) : Forward ({1}) : Reload ({2}) : Loading({3})",
         e.CanGoBack,

@@ -1,2 +1,3 @@
 # CefSharpExample
-Example project for my .NET Nuts and bolts post on CefSharp
+Example CEFSharp demo app project originally taken from @shawty repository and rebuilt with the newer libraries.
+Goal: to play around with Selenium testing with CEFSharp application under test.
